@@ -27,9 +27,10 @@
  const hero=document.getElementById('homeHero'); if(!hero) return;
  const slides=[...hero.querySelectorAll('.hero-slide')];
  const dots=[...hero.querySelectorAll('.hero-dot')];
+ const caps=[...hero.querySelectorAll('.hero-caption')];
  let current=0, timer;
- function showSlide(index){current=(index+slides.length)%slides.length;slides.forEach((slide,i)=>slide.classList.toggle('active',i===current));dots.forEach((dot,i)=>{dot.classList.toggle('active',i===current);dot.setAttribute('aria-pressed',i===current?'true':'false')});}
- function start(){clearInterval(timer);timer=setInterval(()=>showSlide(current+1),2500)}
+ function showSlide(index){current=(index+slides.length)%slides.length;slides.forEach((slide,i)=>slide.classList.toggle('active',i===current));caps.forEach((c,i)=>c.classList.toggle('active',i===current));dots.forEach((dot,i)=>{dot.classList.toggle('active',i===current);dot.setAttribute('aria-pressed',i===current?'true':'false')});}
+ function start(){clearInterval(timer);timer=setInterval(()=>showSlide(current+1),5000)}
  dots.forEach((dot)=>dot.addEventListener('click',()=>{showSlide(Number(dot.dataset.slide));start()}));
  hero.addEventListener('mouseenter',()=>clearInterval(timer));hero.addEventListener('mouseleave',start);
  showSlide(0);start();
@@ -52,4 +53,21 @@
  // close the mobile menu after choosing a link
  const nav=document.getElementById('mobileNav');
  if(nav)nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.style.display='none'}));
+})();
+
+
+// Back-to-top button: appears once the visitor passes the middle of the page
+(function(){
+ const b=document.createElement('button');b.type='button';b.className='to-top';
+ b.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V6M6 11.5l6-6 6 6"/></svg>';
+ const label=()=>{const t=document.documentElement.lang==='en'?'Back to top':'العودة للأعلى';b.setAttribute('aria-label',t);b.title=t};
+ label();new MutationObserver(label).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
+ document.body.appendChild(b);
+ let busy=false;
+ const update=()=>{busy=false;const max=document.documentElement.scrollHeight-window.innerHeight;b.classList.toggle('show',max>0&&window.scrollY>max/2)};
+ window.addEventListener('scroll',()=>{if(!busy){busy=true;requestAnimationFrame(update)}},{passive:true});
+ window.addEventListener('resize',update);
+ if('ResizeObserver' in window)new ResizeObserver(update).observe(document.body);
+ b.addEventListener('click',()=>window.scrollTo({top:0,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'}));
+ update();
 })();

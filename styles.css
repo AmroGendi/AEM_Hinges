@@ -197,3 +197,32 @@ html[data-theme="dark"] .modal-close{background:#e9edf1;color:#102b43}
 html[data-theme="dark"] .hero-dot.active{background:var(--gold)}
 /* logo stays readable on the dark header */
 html[data-theme="dark"] .brand img{filter:brightness(0) invert(1);opacity:.92}
+
+/* ---------- Hero photo captions (Arabic / English) ---------- */
+.hero-captions{position:absolute;z-index:3;inset-inline-end:0;bottom:clamp(100px,15vh,170px);width:min(390px,36%);display:grid}
+.hero-caption{grid-area:1/1;align-self:end;padding:17px 20px 18px;border-radius:18px;background:rgba(5,20,31,.52);border:1px solid rgba(255,255,255,.2);
+ -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);color:#fff;opacity:0;visibility:hidden;transform:translateY(14px);
+ transition:opacity .7s ease,transform .8s cubic-bezier(.22,.8,.24,1),visibility .7s}
+.hero-caption.active{opacity:1;visibility:visible;transform:none;transition-delay:.15s}
+.cap-title{display:flex;align-items:center;gap:10px;margin:0 0 6px;font-weight:800;font-size:1.1rem;line-height:1.5}
+.cap-title:before{content:"";flex:0 0 22px;height:2px;background:var(--gold)}
+.cap-desc{font-size:.9rem;line-height:1.85;color:rgba(255,255,255,.88)}
+body:not(.english) .cap-en{display:none}body.english .cap-ar{display:none}
+@media(max-width:1100px){.hero-captions{inset-inline:0;width:auto;bottom:68px}.hero.hero-slideshow .hero-content{padding-bottom:215px}
+ .hero-caption{padding:13px 16px 14px}.cap-title{font-size:1rem;margin-bottom:3px}.cap-desc{font-size:.84rem;line-height:1.7}}
+@media(max-width:760px){.hero.hero-slideshow{min-height:650px}.hero.hero-slideshow .hero-content{padding-bottom:232px}}
+@media(prefers-reduced-motion:reduce){.hero-caption{transition:none}}
+
+/* ---------- Back to top ---------- */
+.to-top{position:fixed;z-index:60;inset-inline-end:22px;bottom:calc(22px + env(safe-area-inset-bottom,0px));width:48px;height:48px;border:0;border-radius:50%;
+ display:grid;place-items:center;cursor:pointer;background:var(--navy);color:#fff;box-shadow:0 12px 28px rgba(16,43,67,.30);
+ opacity:0;visibility:hidden;transform:translateY(14px) scale(.9);
+ transition:opacity .35s ease,visibility .35s,transform .5s cubic-bezier(.22,.8,.24,1),background .25s ease,color .25s ease}
+.to-top.show{opacity:1;visibility:visible;transform:none}
+.to-top svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;transition:transform .3s ease}
+.to-top:hover{background:var(--gold);color:#182d3b}.to-top:hover svg{transform:translateY(-3px)}
+.to-top:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+html[data-theme="dark"] .to-top{background:var(--gold);color:#182d3b;box-shadow:0 12px 28px rgba(0,0,0,.5)}
+html[data-theme="dark"] .to-top:hover{background:#fff}
+@media(max-width:760px){.to-top{width:44px;height:44px;inset-inline-end:14px;bottom:calc(16px + env(safe-area-inset-bottom,0px))}}
+@media(prefers-reduced-motion:reduce){.to-top,.to-top svg{transition:none}}
