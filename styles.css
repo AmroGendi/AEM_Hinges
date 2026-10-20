@@ -555,3 +555,25 @@ html[data-theme="dark"] .mq-item{color:#e8eef4}
  .trust-card:hover .trust-icon,.feature-card:hover .feature-icon,.ct-card:hover .ct-ic,.ab-why:hover .ct-ic{animation:none}
  .btn,.nav-cta,.pc-arrow{translate:none}
 }
+
+/* ---------- v9 — landscape cards centred with a sliver of both neighbours; square cards on small screens ---------- */
+.cr-hero{padding:clamp(16px,2.6vh,30px) 0 clamp(16px,2.6vh,26px)}
+.cr-top{display:flex;flex-direction:row;align-items:flex-end;justify-content:space-between;gap:14px 28px;flex-wrap:wrap;margin-bottom:clamp(10px,1.8vh,18px)}
+.cr-head{display:flex;flex-direction:column;gap:6px;min-width:0;flex:1 1 360px}
+.cr-tools{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.cr-tools .cr-nav{flex:0 1 auto}
+.cr-tools .pc-segs{width:150px;flex:none}
+.cr-card picture{display:contents}
+@media(max-width:900px){
+ .cr-hero{display:flex;flex-direction:column}
+ .cr-top{display:contents}
+ .cr-head{order:1;width:min(1220px,calc(100% - 40px));margin:0 auto 14px;flex:none}
+ .cr-stage{order:2}
+ .cr-tools{order:3;width:min(1220px,calc(100% - 40px));margin:14px auto 0;flex-direction:column;align-items:stretch;gap:12px}
+ .cr-tools .cr-nav{flex:1 1 auto;max-width:none}
+ .cr-tools .pc-segs{width:auto;flex:1;max-width:none}
+ .cr-tools .btn{width:100%}
+}
+
+.cr-h1{max-width:none;font-size:clamp(1.2rem,1.9vw,1.75rem);line-height:1.45}
+@media(max-width:900px){.cr-h1{font-size:1.3rem}}

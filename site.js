@@ -118,12 +118,18 @@
 
  function metrics(){
   SW=stage.clientWidth||1200;rtl=root.dir==='rtl';
-  if(SW<700){Cw=Math.round(SW*.78);Ch=Math.round(Cw*1.12);gap=14;off=14}
-  else{Ch=Math.round(Math.min(560,Math.max(300,window.innerHeight*.56)));Cw=Math.round(Ch*1.08);gap=22;off=Math.max(20,(SW-1220)/2)}
+  if(SW<700){ // small screens: square cards, a sliver of both neighbours
+   gap=10;const s=Math.max(18,Math.round(SW*.06));Cw=Math.round(SW-2*(s+gap));Ch=Cw;
+  }else{      // wide screens: landscape cards (16:9) centred, a small part of each neighbour visible
+   gap=22;const sliver=Math.max(56,Math.min(110,SW*.07));
+   const hh=(document.querySelector('.topbar')||{offsetHeight:82}).offsetHeight,th=(hero.querySelector('.cr-top')||{offsetHeight:90}).offsetHeight+16,availH=window.innerHeight-hh-th-22-40-24;
+   Ch=Math.round(Math.min((SW-2*(sliver+gap))/1.78,Math.max(availH,380),760));Cw=Math.round(Ch*1.78);
+  }
+  off=SW/2-Cw/2;
   hero.style.setProperty('--cw',Cw+'px');hero.style.setProperty('--ch',Ch+'px');
   X=[];SC=[];const w=k=>Cw*sc(k);
   for(let k=-3;k<=3;k++){SC[k+3]=sc(k)}
-  X[3]=off+Cw/2;
+  X[3]=SW/2;
   for(let k=1;k<=3;k++)X[3+k]=X[3+k-1]+w(k-1)/2+gap+w(k)/2;
   for(let k=-1;k>=-3;k--)X[3+k]=X[3+k+1]-w(k+1)/2-gap-w(k)/2;
  }
@@ -212,7 +218,7 @@
   stage.addEventListener('pointerleave',()=>ring.classList.remove('show'));
  }
 
- if('ResizeObserver' in window)new ResizeObserver(()=>{metrics();layout()}).observe(stage);
+ if('ResizeObserver' in window){const ro=new ResizeObserver(()=>{metrics();layout()});ro.observe(stage);const tp=hero.querySelector('.cr-top');if(tp)ro.observe(tp)}
  window.addEventListener('resize',()=>{metrics();layout()});
  new MutationObserver(()=>{metrics();layout()}).observe(root,{attributes:true,attributeFilter:['dir','lang']});
  metrics();layout();progress(0);cards.forEach((c,i)=>c.setAttribute('aria-hidden',i===0?'false':'true'));schedule();
