@@ -514,8 +514,8 @@ html[dir="rtl"] .scroll-progress{transform-origin:100% 50%}
 
 /* spring reveal (JS adds .fx then .fx-in; classes are removed once the animation ends) */
 .fx{opacity:0}
-.fx.fx-in{opacity:1;animation:fxPop .9s var(--fx-d,0ms) cubic-bezier(.22,1,.36,1) backwards}
-@keyframes fxPop{0%{opacity:0;transform:translateY(48px) scale(.9)}55%{opacity:1;transform:translateY(-10px) scale(1.015)}78%{transform:translateY(3px) scale(.998)}100%{opacity:1;transform:none}}
+.fx.fx-in{opacity:1;animation:fxPop .7s var(--fx-d,0ms) cubic-bezier(.22,1,.36,1) backwards}
+@keyframes fxPop{0%{opacity:0;transform:translateY(22px)}100%{opacity:1;transform:none}}
 
 /* buttons: springy hop + press */
 .btn,.nav-cta,.pc-arrow,.cr-more{translate:var(--mx,0) var(--my,0)}
@@ -589,4 +589,41 @@ html[data-theme="dark"] .mq-item{color:#e8eef4}
  .cr-nav .pc-arrow{width:36px;height:36px;border-color:rgba(255,255,255,.5)}
  .cr-nav .pc-arrow svg{width:17px;height:17px}
  .cr-nav .pc-segs{width:104px;flex:none}
+}
+
+/* =====================================================================
+   v11 — minimal pass: calmer motion, one radius, fewer weights, no decoration
+   ===================================================================== */
+:root{--r:16px}
+/* motion: no spotlight, no hopping icons, no magnetic/bouncy buttons */
+.product-card::before,.ab-cat::before,.ab-why::before,.ct-card::before,.ab-stat::before{display:none!important}
+.trust-card:hover .trust-icon,.feature-card:hover .feature-icon,.ct-card:hover .ct-ic,.ab-why:hover .ct-ic{animation:none!important}
+.btn,.nav-cta,.pc-arrow,.cr-more{translate:none}
+.btn,.nav-cta{transition:transform .3s ease,box-shadow .3s ease,background .25s ease,border-color .25s ease,color .25s ease}
+.btn:hover,.nav-cta:hover{transform:translateY(-2px)}
+.ab-stat:hover,.ab-why:hover,.ct-card:hover{transform:none}
+/* hero: calm chips, plain navy */
+.cr-hero{background-color:#102b43}
+.cr-chip{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);font-weight:600}
+/* one radius */
+.ab-cat,.ab-why,.ab-stat,.ct-card,.ct-info,.map-frame,.ab-emblem,.ab-cta,.product-card,.about-visual,.cr-card,.group-section .product-card{border-radius:var(--r)}
+.product-image{border-radius:calc(var(--r) - 1px) calc(var(--r) - 1px) 0 0}
+.ab-cat-img img{border-radius:10px}
+.btn,.nav-cta,.filter-btn{border-radius:12px}
+/* fewer weights */
+h1,h2,h3,.pg-title,.cr-h1,.cr-title,.group-title,.page-hero h1,.ab-stat strong,.ct-value,.em-name,.brand strong,.about-copy h2,.section-head h2{font-weight:700}
+.btn,.nav-cta,.filter-btn,.text-link,.cr-more,.ab-more,.ask,.navlinks a,.mnav a,.pg-kicker,.ph-kicker{font-weight:600}
+/* about / contact: drop decoration */
+.ph-orn{display:none}
+.ab-emblem:before,.ab-emblem:after{display:none}
+.page-hero{background:linear-gradient(125deg,#0f2a40,#143a57)}
+.ab-cta{background:linear-gradient(135deg,#0f2a40,#17384f)}
+/* home category grid: lighter */
+.home-cats .ab-cat-body p{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+@media(max-width:560px){
+ .home-cats{grid-template-columns:repeat(2,1fr);gap:12px}
+ .home-cats .ab-cat-body{padding:12px 14px 14px}
+ .home-cats .ab-cat-body p{display:none}
+ .home-cats .ab-cat-img{aspect-ratio:1/1;padding:8px}
+ .home-cats h3{font-size:.98rem}
 }

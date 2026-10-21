@@ -162,7 +162,7 @@
  }
  function show(idx){
   if(idx===shown)return;shown=idx;
-  hero.style.setProperty('--cr-bg',BG[idx%BG.length]);
+  
   cards.forEach((c,i)=>{const l=c.querySelector('.cr-more');if(l)l.tabIndex=i===idx?0:-1;c.setAttribute('aria-hidden',i===idx?'false':'true')});
   progress(idx);if(cur)cur.textContent=dig(String(idx+1).padStart(2,'0'));
  }
@@ -269,7 +269,7 @@
   const arm=el=>{
    if(el.dataset.fx)return;el.dataset.fx='1';el.classList.add('fx');
    const i=el.parentElement?[...el.parentElement.children].indexOf(el):0;
-   el.style.setProperty('--fx-d',(Math.max(0,i)%6)*85+'ms');io.observe(el);
+   el.style.setProperty('--fx-d',(Math.max(0,i)%6)*55+'ms');io.observe(el);
   };
   document.querySelectorAll(SEL).forEach(arm);
   const cat=document.getElementById('productCatalog');
@@ -278,26 +278,4 @@
   }))).observe(cat,{childList:true});
  }
 
- // magnetic buttons + cursor spotlight (mouse only)
- if(fine&&!reduce){
-  const MAG='.btn,.nav-cta,.pc-arrow';
-  const SPOT='.product-card,.ab-cat,.ab-why,.ct-card,.ab-stat,.trust-card,.feature-card';
-  let last=null,raf=0,pe=null;
-  const reset=el=>{el.style.setProperty('--mx','0px');el.style.setProperty('--my','0px')};
-  document.addEventListener('pointermove',e=>{
-   if(e.pointerType!=='mouse')return;pe=e;
-   if(raf)return;
-   raf=requestAnimationFrame(()=>{
-    raf=0;const ev=pe;
-    const m=ev.target.closest&&ev.target.closest(MAG);
-    if(last&&last!==m){reset(last);last=null}
-    if(m){const r=m.getBoundingClientRect();
-     const dx=((ev.clientX-r.left)/r.width-.5)*2,dy=((ev.clientY-r.top)/r.height-.5)*2;
-     m.style.setProperty('--mx',(dx*7).toFixed(1)+'px');m.style.setProperty('--my',(dy*6).toFixed(1)+'px');last=m}
-    const c=ev.target.closest&&ev.target.closest(SPOT);
-    if(c){const r=c.getBoundingClientRect();c.style.setProperty('--gx',(ev.clientX-r.left)+'px');c.style.setProperty('--gy',(ev.clientY-r.top)+'px')}
-   });
-  },{passive:true});
-  document.addEventListener('pointerleave',()=>{if(last){reset(last);last=null}},true);
- }
 })();
