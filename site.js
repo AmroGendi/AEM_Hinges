@@ -127,6 +127,7 @@
   }
   off=SW/2-Cw/2;
   hero.style.setProperty('--cw',Cw+'px');hero.style.setProperty('--ch',Ch+'px');
+  {const hb=hero.getBoundingClientRect().bottom,st=stage.getBoundingClientRect().top;hero.style.setProperty('--nbot',Math.max(16,Math.round(hb-(st+20+Ch)+20))+'px')}
   X=[];SC=[];const w=k=>Cw*sc(k);
   for(let k=-3;k<=3;k++){SC[k+3]=sc(k)}
   X[3]=SW/2;
@@ -163,7 +164,7 @@
   if(idx===shown)return;shown=idx;
   hero.style.setProperty('--cr-bg',BG[idx%BG.length]);
   cards.forEach((c,i)=>{const l=c.querySelector('.cr-more');if(l)l.tabIndex=i===idx?0:-1;c.setAttribute('aria-hidden',i===idx?'false':'true')});
-  progress(idx);cur.textContent=dig(String(idx+1).padStart(2,'0'));
+  progress(idx);if(cur)cur.textContent=dig(String(idx+1).padStart(2,'0'));
  }
  function go(t){target=t;show(mod(Math.round(t),N));if(reduce){pos=target;vel=0;layout()}else kick()}
  const step=d=>{go(Math.round(target)+d);schedule()};
