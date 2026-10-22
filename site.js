@@ -261,7 +261,7 @@
 
  // spring reveal
  if(!reduce&&'IntersectionObserver' in window){
-  const SEL='.trust-card,.feature-card,.section-head,.about-visual,.about-copy,.ab-stat,.ab-cat,.ab-why,.ct-card,.ct-info,.map-frame,.ab-emblem,.ab-text,.ab-cta,.pg-head,.group-title,.product-card,.mq,.contact-section .wrap>*';
+  const SEL='.trust-card,.feature-card,.section-head,.about-visual,.about-copy,.ab-stat,.ab-cat,.ab-why,.ct-card,.ct-info,.map-frame,.ab-emblem,.ab-text,.ab-cta,.pg-head,.group-title,.product-card,.pl-card,.mq,.contact-section .wrap>*';
   const io=new IntersectionObserver(es=>es.forEach(e=>{
    if(!e.isIntersecting)return;const el=e.target;io.unobserve(el);el.classList.add('fx-in');
    el.addEventListener('animationend',ev=>{if(ev.target===el&&ev.animationName==='fxPop'){el.classList.remove('fx','fx-in');el.style.removeProperty('--fx-d')}});
@@ -278,4 +278,41 @@
   }))).observe(cat,{childList:true});
  }
 
+})();
+
+
+// Full-bleed hero: crossfading photos, slow zoom, caption + progress, swipe
+(function(){
+ const hero=document.getElementById('fbHero');if(!hero)return;
+ const root=document.documentElement;
+ const slides=[...hero.querySelectorAll('.fb-slide')],caps=[...hero.querySelectorAll('.fb-cap')],segs=[...hero.querySelectorAll('.pc-seg')];
+ const N=slides.length,AUTO=6500,reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ let i=0,timer=0,hover=false,focused=false,press=null;
+ hero.style.setProperty('--pc-dur',AUTO+'ms');if(reduce)hero.classList.add('no-auto');
+ function show(n){
+  i=((n%N)+N)%N;
+  slides.forEach((s,k)=>{s.classList.toggle('on',k===i);s.setAttribute('aria-hidden',k===i?'false':'true')});
+  caps.forEach((c,k)=>{c.classList.toggle('on',k===i);c.tabIndex=k===i?0:-1;c.setAttribute('aria-hidden',k===i?'false':'true')});
+  segs.forEach((g,k)=>{g.classList.remove('on');g.classList.toggle('done',k<i);g.setAttribute('aria-current',k===i?'true':'false')});
+  void hero.offsetWidth;segs[i].classList.add('on');
+ }
+ const paused=()=>hover||focused||document.hidden||!!press;
+ function schedule(){clearTimeout(timer);if(reduce||paused())return;timer=setTimeout(()=>{show(i+1);schedule()},AUTO)}
+ function refresh(){if(paused()){clearTimeout(timer);hero.classList.add('is-paused')}else{hero.classList.remove('is-paused');show(i);schedule()}}
+ const go=n=>{show(n);schedule()};
+ hero.querySelector('.pc-prev').addEventListener('click',()=>go(i-1));
+ hero.querySelector('.pc-next').addEventListener('click',()=>go(i+1));
+ segs.forEach((g,k)=>g.addEventListener('click',()=>go(k)));
+ hero.addEventListener('keydown',e=>{if(e.key!=='ArrowLeft'&&e.key!=='ArrowRight')return;const rtl=root.dir==='rtl';go(((e.key==='ArrowRight')!==rtl)?i+1:i-1);e.preventDefault()});
+ hero.addEventListener('mouseenter',()=>{hover=true;refresh()});
+ hero.addEventListener('mouseleave',()=>{hover=false;refresh()});
+ hero.addEventListener('focusin',e=>{if(e.target.matches(':focus-visible')){focused=true;refresh()}});
+ hero.addEventListener('focusout',()=>{focused=false;refresh()});
+ document.addEventListener('visibilitychange',refresh);
+ // swipe on touch screens
+ const area=hero.querySelector('.fb-slides');
+ hero.addEventListener('pointerdown',e=>{if(e.pointerType==='mouse'||e.target.closest('a,button'))return;press={x:e.clientX}});
+ const end=e=>{if(!press)return;const dx=e.clientX-press.x;press=null;if(Math.abs(dx)>50){const rtl=root.dir==='rtl';go((rtl?dx>0:dx<0)?i+1:i-1)}else refresh()};
+ hero.addEventListener('pointerup',end);hero.addEventListener('pointercancel',()=>{press=null});
+ show(0);schedule();
 })();
