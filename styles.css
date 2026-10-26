@@ -668,7 +668,7 @@ body.english .fb-h1{line-height:1.08;letter-spacing:-.025em}
 .fb-cap{grid-area:1/1;align-self:center;display:flex;align-items:center;gap:14px;flex-wrap:wrap;color:#fff;opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity .6s ease,transform .6s ease,visibility .6s}
 .fb-cap.on{opacity:1;visibility:visible;transform:none}
 .fb-cap b{font-size:1rem;font-weight:700}
-.fb-cap span{color:#f4d69a;font-size:.88rem;font-weight:600}
+.fb-cap>span{color:#f4d69a;font-size:.88rem;font-weight:600}
 .fb-nav{display:flex;align-items:center;gap:12px;flex:none}
 .fb-nav .pc-arrow{width:40px;height:40px}
 .fb-nav .pc-segs{width:130px;flex:none}
@@ -678,7 +678,7 @@ body.english .fb-h1{line-height:1.08;letter-spacing:-.025em}
 @media(max-width:700px){
  .fb-content{padding:104px 0 128px}
  .fb-h1{font-size:2rem}
- .fb-cap span{display:none}.fb-cap b{font-size:.92rem}
+ .fb-cap>span{display:none}.fb-cap b{font-size:.92rem}
  .fb-nav .pc-segs{width:78px}.fb-nav{gap:8px}
 }
 @media(prefers-reduced-motion:reduce){.fb-slide,.fb-slide img,.fb-cap{transition:none}.fb-slide img{transform:none}}
@@ -719,3 +719,17 @@ html[data-theme="dark"] .pil-card p{color:#98a9b8}
 html[data-theme="dark"] .pil-links a{color:#e8eef4;border-color:#2a3d4f}
 html[data-theme="dark"] .pil-links a:hover{background:rgba(231,180,92,.1)}
 html[data-theme="dark"] .pil-more,html[data-theme="dark"] .fp-all{color:var(--gold)}
+
+/* ---------- v13 — phones / small screens: square photo shown whole, text below ---------- */
+.fb-slide{overflow:hidden}
+@media(max-width:700px){
+ .fb-hero{display:block;min-height:0;background:#0b2031}
+ .fb-slides{position:relative;inset:auto;width:100%;aspect-ratio:1/1}
+ .fb-shade{inset:0 0 auto 0;height:100vw;background:linear-gradient(180deg,rgba(5,15,25,.62) 0%,rgba(5,15,25,0) 30%,rgba(5,15,25,0) 66%,#0b2031 100%)}
+ .fb-shade:after{display:none}
+ .fb-content{padding:16px 0 4px}
+ .fb-h1{font-size:1.75rem;line-height:1.35}
+ .fb-sub{margin-top:8px;font-size:.92rem}
+ .fb-cta{margin-top:18px}
+ .fb-bar{position:static;margin:22px auto 0;padding:14px 0 28px}
+}
