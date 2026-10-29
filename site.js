@@ -3,11 +3,11 @@
  let active='all', lang=(function(){try{return sessionStorage.getItem('amh-lang')==='en'?'en':'ar'}catch(e){return 'ar'}})();
  {const _h=(location.hash||'').replace('#','');if(groups.some(g=>g.key===_h))active=_h;}
  window.addEventListener('hashchange',()=>{const h=(location.hash||'').replace('#','');if(groups.some(g=>g.key===h)){active=h;renderFilters();renderCatalog()}});
- const translations={'كتالوج أبناء أحمد منصور':'Ahmed Mansour Sons Catalog','اقرأ قصتنا　←':'Read Our Story　→','صفحة التواصل　←':'Contact Page　→','⌖　ميت غمر، الدقهلية　↗':'⌖　Mit Ghamr, Dakahlia　↗',
+ const translations={'◷　الأحد – الخميس · 8 ص – 5 م':'◷　Sun – Thu · 8 AM – 5 PM','كتالوج أبناء أحمد منصور':'Ahmed Mansour Sons Catalog','اقرأ قصتنا　←':'Read Our Story　→','صفحة التواصل　←':'Contact Page　→','⌖　ميت غمر، الدقهلية　↗':'⌖　Mit Ghamr, Dakahlia　↗',
  'الرئيسية':'Home','المنتجات':'Products','من نحن':'About Us','تواصل معنا':'Contact','اتصل بنا　↗':'Call Us　↗','أبناء أحمد منصور · ميت غمر، الدقهلية':'Ahmed Mansour Sons · Mit Ghamr, Dakahlia','أبناء أحمد منصور':'Ahmed Mansour Sons','Ahmed Mansour Sons · Hardware Accessories':'Hardware Accessories Manufacturer','أبناء أحمد منصور · Ahmed Mansour Sons':'Ahmed Mansour Sons','اكتشف مجموعة المفصلات وإكسسوارات الأثاث ومستلزمات التثبيت في كتالوج منظم، بصور واضحة وأسماء ومقاسات تساعدك في الوصول للصنف المطلوب.':'Explore our hinges, furniture accessories and fixing products in an organized catalog with clear images, names and sizes.','تصفح كل المنتجات　←':'Browse All Products　→','اتصل للاستفسار':'Call for Inquiries','أنواع متنوعة':'Wide Product Range','مفصلات وإكسسوارات للأثاث':'Hinges and furniture accessories','صور المنتجات الفعلية':'Actual Product Photos','كل صنف مرتبط بصورته المخصصة':'Each item is matched with its own photo','كتالوج واضح':'Easy-to-Browse Catalog','ابحث بالاسم أو تصفح حسب القسم':'Search by name or browse by category','تصفح حسب الفئة':'Browse by Category','تصفح كل المنتجات':'Browse All Products','من أين تحب أن تبدأ؟':'تصفح كل المنتجات','انتقل مباشرة إلى مجموعة المنتجات التي تبحث عنها.':'Go directly to the product category you need.','كل المنتجات في صفحة مستقلة　←':'Browse All Products　→','المفصلات':'Hinges','أرو، بحلية، سكينة وبؤجة':'Arrow, H, Knife and Butt Hinges','استكشف المفصلات　←':'Explore Hinges　→','الترابيس':'Barrel Bolts','مقاسات مختلفة وترباس بسلسلة':'Different sizes and a chain bolt','استكشف الترابيس　←':'Explore Barrel Bolts　→','عجلات':'Casters','مقاسات وخيارات بفرامل أو بدون':'Different sizes with or without brakes','استكشف العجلات　←':'Explore Casters　→','كتالوج المنتجات':'Product Catalog','تصفح كل المنتجات':'Browse All Products','جميع المنتجات':'All Products','جميع الحقوق محفوظة © 2026':'All rights reserved © 2026','جميع الحقوق محفوظة © 2026 أبناء أحمد منصور':'All rights reserved © 2026','من نحن':'About Us','نعرض مجموعة من المفصلات وإكسسوارات الأثاث ومستلزمات التثبيت، مع تنظيم المنتجات حسب الفئة والمقاس لتسهيل الوصول إلى الصنف المطلوب.':'We offer hinges, furniture accessories and fixing products, organized by category and size for easy browsing.','افتح صفحة المنتجات　←':'View Product Catalog　→','تبحث عن صنف محدد؟':'Looking for a Specific Item?','اتصل بنا للاستفسار عن المنتج والمقاس والتوافر.':'Contact us to ask about products, sizes and availability.','جميع الحقوق محفوظة © 2026':'All rights reserved © 2026','جميع الحقوق محفوظة © 2026 أبناء أحمد منصور':'All rights reserved © 2026','ميت غمر، الدقهلية':'Mit Ghamr, Dakahlia','كل الأقسام':'All Categories','منتج':'products','لا توجد نتائج مطابقة. جرّب اسمًا أو مقاسًا آخر.':'No matching results. Try another name or size.','صورة المنتج غير متاحة':'Product image unavailable','هل تحتاج إلى مساعدة في اختيار الصنف؟':'Need Help Choosing a Product?','تواصل معنا للاستفسار عن المقاس والتوافر.':'Contact us for size and availability information.','← العودة للرئيسية':'← Back to Home','المنتجات بالصور والمقاسات':'Products with Photos and Sizes','تصفح الأصناف حسب القسم أو ابحث بالاسم أو المقاس. اضغط على أي صورة لعرضها بحجم أكبر.':'Browse by category or search by name or size. Click any image to enlarge.','كل الأصناف':'All Items','الموقع مخصص للعرض فقط؛ للاستفسار عن الأسعار والتوافر اتصل بنا.':'Display catalog only. Contact us for prices and availability.'};
  function localizeDigits(){
   const toAr='٠١٢٣٤٥٦٧٨٩', toEn='0123456789';
-  const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,{acceptNode:n=>{const p=n.parentElement;return p&&['SCRIPT','STYLE'].includes(p.tagName)?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT}});
+  const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,{acceptNode:n=>{const p=n.parentElement;return p&&(['SCRIPT','STYLE'].includes(p.tagName)||p.closest('[data-keep-digits]'))?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT}});
   let node;while(node=walker.nextNode()){node.nodeValue=node.nodeValue.replace(/[٠-٩]/g,d=>toEn['٠١٢٣٤٥٦٧٨٩'.indexOf(d)]).replace(/[0-9]/g,d=>lang==='ar'?toAr[Number(d)]:d)}
  }
  function applyLanguage(){document.documentElement.lang=lang;document.documentElement.dir=lang==='ar'?'rtl':'ltr';document.body.classList.toggle('english',lang==='en');
@@ -315,4 +315,15 @@
  const end=e=>{if(!press)return;const dx=e.clientX-press.x;press=null;if(Math.abs(dx)>50){const rtl=root.dir==='rtl';go((rtl?dx>0:dx<0)?i+1:i-1)}else refresh()};
  hero.addEventListener('pointerup',end);hero.addEventListener('pointercancel',()=>{press=null});
  show(0);schedule();
+})();
+
+
+// Registration numbers (from credentials-data.js): shown next to the name only when filled in
+(function(){
+ const list=window.CREDENTIALS;if(!Array.isArray(list))return;
+ list.forEach(c=>{
+  if(!c||!c.number)return;
+  const li=document.querySelector('[data-cred="'+c.key+'"]');if(!li)return;
+  const b=document.createElement('bdi');b.className='cred-no';b.setAttribute('data-keep-digits','');b.textContent=String(c.number).trim();li.appendChild(b);
+ });
 })();
