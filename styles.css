@@ -776,3 +776,14 @@ html[data-theme="dark"] .cred-list svg{stroke:var(--gold)}
 
 .cred-no{margin-inline-start:2px;padding:1px 9px;border-radius:999px;background:#fbf1df;color:#8a5a14;font-size:.82rem;font-weight:700;direction:ltr;unicode-bidi:isolate}
 html[data-theme="dark"] .cred-no{background:rgba(231,180,92,.14);color:var(--gold)}
+
+/* v15 — finishes aligned on one line, tax line in footer */
+.mt-finishes li{justify-content:flex-start;gap:12px;padding:28px 8px 22px}
+.mt-finishes li b,.mt-finishes li small{display:block;width:100%}
+.mt-finishes li small{margin-top:-6px}
+.footer-inner{flex-direction:column;gap:6px}
+.tax-line{font-size:.82rem;color:rgba(255,255,255,.55)}
+.tax-line bdi{color:rgba(255,255,255,.85);font-weight:600;letter-spacing:.02em}
+/* finishes: circle + label centred as one block, equal text height so every circle sits on the same line */
+.mt-finishes li{justify-content:center}
+.mt-finishes li:not(:has(small))::after{content:"";display:block;height:1.25em;margin-top:-6px}

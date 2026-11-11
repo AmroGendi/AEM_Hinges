@@ -316,14 +316,3 @@
  hero.addEventListener('pointerup',end);hero.addEventListener('pointercancel',()=>{press=null});
  show(0);schedule();
 })();
-
-
-// Registration numbers (from credentials-data.js): shown next to the name only when filled in
-(function(){
- const list=window.CREDENTIALS;if(!Array.isArray(list))return;
- list.forEach(c=>{
-  if(!c||!c.number)return;
-  const li=document.querySelector('[data-cred="'+c.key+'"]');if(!li)return;
-  const b=document.createElement('bdi');b.className='cred-no';b.setAttribute('data-keep-digits','');b.textContent=String(c.number).trim();li.appendChild(b);
- });
-})();
